@@ -43,7 +43,7 @@ AutomaticActionService::AutomaticActionService() : Node("automatic_action_servic
                 std::placeholders::_1,
                 std::placeholders::_2));
 
-  m_notification_publisher = this->create_publisher<Notification>("notification", 10);
+  m_notification_publisher = this->create_publisher<Notification>("notifications", 10);
 
   m_yaml_config_manager->loadConfigurationFromFile("config.yaml", m_configurations, m_topics_data);
   initializeSubscriptions();

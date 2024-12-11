@@ -30,5 +30,5 @@ If you want to contribute to this project, please read the following sections:
 - /available_topics_combined
 
 ### Publishers
-- /notification
+- /notifications
 - /<publisher_created_by_user_in_service>
