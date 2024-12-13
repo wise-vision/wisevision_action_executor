@@ -27,17 +27,9 @@ add_library(automatic_action_service_lib
 )
 target_link_libraries(automatic_action_service_lib ${YAML_CPP_LIBRARIES})
 
-add_executable(talker 
-  src/talker.cpp
-)
 
 add_executable(automatic_action_service 
   src/main.cpp
-)
-
-ament_target_dependencies(talker 
-  rclcpp 
-  std_msgs
 )
 
 ament_target_dependencies(automatic_action_service_lib 
@@ -72,7 +64,6 @@ if(BUILD_TESTING)
 endif()
 
 install(TARGETS
-  talker
   automatic_action_service
   DESTINATION lib/${PROJECT_NAME})
 
