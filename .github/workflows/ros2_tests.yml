@@ -1,0 +1,68 @@
+name: Build and run ROS2 tests
+
+on:
+  pull_request:
+
+    branches:
+      - dev
+      - main
+      - 'stabilization/**'
+
+  schedule:
+    - cron: '0 22 * * *'
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    continue-on-error: true
+
+    container:
+      image: ros:humble-ros-base
+
+    steps:
+    - name: Create workspace directory
+      run: |
+        mkdir -p wisevision_action_executor_ws/src
+  
+    - name: Checkout code
+
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT_TOKEN }} 
+        path: wisevision_action_executor_ws/src/wisevision_action_executor
+
+    - name: Configure Git for HTTPS authentication
+      run: |
+        git config --global url."https://${{ secrets.PAT_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
+    - name: Import repositories using vcs
+      run: |
+        cd wisevision_action_executor_ws/src
+        vcs import --recursive < wisevision_action_executor/wisevision_action_executor.repos
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-rosdep libyaml-cpp-dev
+        if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then
+          sudo rosdep init
+        fi
+        sudo rosdep fix-permissions
+        rosdep update --include-eol-distros --rosdistro=humble
+        cd wisevision_action_executor_ws
+        rosdep install --from-path src -i -y --rosdistro humble
+
+    - name: Build test
+      run: |
+        . /opt/ros/humble/setup.sh
+        colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to wisevision_action_executor
+
+        
+    - name: Test result summary
+      run: |
+        . /opt/ros/humble/setup.sh
+        colcon test --packages-select automatic_action_execution
+        colcon test-result --verbose
+
