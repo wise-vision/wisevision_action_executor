@@ -56,13 +56,20 @@ jobs:
 
     - name: Build test
       run: |
+        cd wisevision_action_executor_ws
         . /opt/ros/humble/setup.sh
         colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to wisevision_action_executor
 
         
     - name: Test result summary
       run: |
+        cd wisevision_action_executor_ws
         . /opt/ros/humble/setup.sh
         colcon test --packages-select automatic_action_execution
         colcon test-result --verbose
+    
+    - name: Clean up workspace
+      if: always()
+      run: |
+        sudo rm -rf wisevision_action_executor_ws
 
