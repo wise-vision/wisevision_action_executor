@@ -1,4 +1,12 @@
-// Copyright (c) 2024, WiseVision. All rights reserved.
+/*
+ * Copyright (C) 2025 wisevision
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 #include <gtest/gtest.h>
 #include <lora_msgs/msg/micro_publisher.hpp>
 #include <nav_msgs/msg/map_meta_data.hpp>

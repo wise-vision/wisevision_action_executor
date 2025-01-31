@@ -1,4 +1,13 @@
-// Copyright (c) 2024, WiseVision. All rights reserved.
+/*
+ * Copyright (C) 2025 wisevision
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 // Code prove functionality of the AutomaticActionService class, which is a ROS2 node that provides services to create,
 // delete, and connect to topics. The class also provides a service to get the available topics and a service to delete
 // a combined publisher. The class has a constructor that initializes the services and loads the configurations from the
