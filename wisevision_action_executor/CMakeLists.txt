@@ -42,7 +42,7 @@ rclcpp_components_register_node(
   automatic_action_service_lib 
   PLUGIN "AutomaticActionService"
   EXECUTABLE automatic_action_service
-  )
+)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
