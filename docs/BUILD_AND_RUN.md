@@ -19,6 +19,18 @@ source install/setup.bash
 ros2 run wisevision_action_executor automatic_action_service
 ```
 
+Run as component:
+First start components container:
+```bash
+source install/setup.bash
+ros2 run rclcpp_components component_container
+```
+Load component:
+```bash
+source install/setup.bash
+ros2 component load /ComponentManager wisevision_action_executor AutomaticActionService
+```
+
 ## Docker build and run
 Prequistances: Clone repository:
 ```bash

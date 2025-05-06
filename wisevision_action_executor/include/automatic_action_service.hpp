@@ -69,6 +69,8 @@ public:
   // Constructor, which initializes the services and loads the configurations from the yaml files
   AutomaticActionService();
 
+  explicit AutomaticActionService(const rclcpp::NodeOptions& options);
+
   // Intiliazes existing subscriptions
   void initializeSubscriptions();
 
