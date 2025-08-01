@@ -19,21 +19,18 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_typesupport_introspection_cpp REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
 
-add_library(automatic_action_service_lib
+add_library(automatic_action_service_lib SHARED
   src/yaml_config_manager.cpp
   src/value_extractor.cpp
   src/automatic_action_service.cpp
 )
 target_link_libraries(automatic_action_service_lib ${YAML_CPP_LIBRARIES})
 
-
-add_executable(automatic_action_service 
-  src/main.cpp
-)
-
 ament_target_dependencies(automatic_action_service_lib 
   rclcpp std_msgs 
+  rclcpp_components 
   lora_msgs
   notification_msgs   
   rosidl_typesupport_cpp
@@ -41,7 +38,11 @@ ament_target_dependencies(automatic_action_service_lib
   yaml-cpp
 )
 
-target_link_libraries(automatic_action_service automatic_action_service_lib)
+rclcpp_components_register_node(
+  automatic_action_service_lib 
+  PLUGIN "AutomaticActionService"
+  EXECUTABLE automatic_action_service
+)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
@@ -66,5 +67,16 @@ endif()
 install(TARGETS
   automatic_action_service
   DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS
+  automatic_action_service_lib 
+  automatic_action_service
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+ament_export_dependencies(rclcpp_components)
+ament_export_libraries(automatic_action_service_lib)
 
 ament_package()
